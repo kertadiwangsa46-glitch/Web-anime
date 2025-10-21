@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Populer - KYNAYNIME</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f172a; color: #e2e8f0; }
+        .shine-effect { position: relative; overflow: hidden; }
+        .shine-effect::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%); transform: rotate(25deg); transition: all 0.6s ease; opacity: 0; pointer-events: none; }
+        .shine-effect:hover::after { opacity: 1; transform: translate(25%, 25%) rotate(25deg); }
+        .header-shine::after { background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%); animation: shine-animation 5s infinite linear; }
+        @keyframes shine-animation { 0% { transform: translateX(-150%) rotate(25deg); opacity: 0; } 50% { transform: translateX(0) rotate(25deg); opacity: 1; } 100% { transform: translateX(150%) rotate(25deg); opacity: 0; } }
+        .loader { border-top-color: #3b82f6; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+
+    <div id="loader" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm flex justify-center items-center z-[100]">
+        <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-500 h-12 w-12"></div>
+    </div>
+
+
+    <header class="bg-slate-900/60 backdrop-blur-lg sticky top-0 z-50 shadow-lg shadow-slate-900/20">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-extrabold text-white shine-effect header-shine">KYNAYNIME</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="index.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Home</a>
+                    <a href="popular.html" class="text-blue-400 font-semibold bg-slate-800/50 px-3 py-2 rounded-md text-sm">Populer</a>
+                    <a href="latest.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Terbaru</a>
+                    <a href="movie.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Movie</a>
+                </div>
+                <div class="flex-1 max-w-xs ml-4">
+                    <form id="searchForm" class="relative">
+                        <input id="searchInput" type="search" placeholder="Cari anime..." class="w-full bg-slate-800 text-slate-300 rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                        <button type="submit" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                            <svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" /></svg>
+                        </button>
+                    </form>
+                </div>
+                <div class="md:hidden ml-2">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                    </button>
+                </div>
+            </div>
+          
+            <div id="mobile-menu" class="md:hidden hidden pb-3">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="index.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                    <a href="popular.html" class="text-blue-400 block px-3 py-2 rounded-md text-base font-medium bg-slate-800/50">Populer</a>
+                    <a href="latest.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Terbaru</a>
+                    <a href="movie.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Movie</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <section id="popular-content">
+            <h1 class="text-3xl font-bold text-white mb-6 border-l-4 border-blue-500 pl-4">Anime Terpopuler</h1>
+            <div id="popular-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
+            
+                ${Array(18).fill('').map(() => `
+                    <div class="bg-slate-800 rounded-lg animate-pulse">
+                        <div class="pt-[140%] bg-slate-700 rounded-t-lg"></div>
+                        <div class="p-3">
+                            <div class="h-4 bg-slate-700 rounded w-3/4"></div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900/80 mt-12 border-t border-slate-800">
+        <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-slate-400 text-sm">
+            &copy; 2025 KYNAYNIME — Dibuat oleh Farhan Kertadiwangsa
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        const API_BASE = 'https://www.sankavollerei.com/anime/stream';
+        const loader = document.getElementById('loader');
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        const createAnimeCard = (anime) => `
+            <a href="detail.html?slug=${anime.slug}" class="group block bg-slate-800 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-2 shine-effect opacity-0" style="transform: translateY(20px);">
+                <div class="relative pt-[140%]">
+                    <img src="${anime.poster}" alt="${anime.title}" class="absolute top-0 left-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                </div>
+                <div class="p-3">
+                    <h3 class="font-semibold text-white truncate group-hover:text-blue-400 transition">${anime.title}</h3>
+                </div>
+            </a>
+        `;
+
+        const renderGrid = (data) => {
+            const grid = document.getElementById('popular-grid');
+            if (!grid) return;
+            grid.innerHTML = data.map(createAnimeCard).join('');
+            gsap.to('#popular-grid > a', {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                stagger: 0.05,
+                ease: 'power2.out'
+            });
+        };
+
+        const fetchPopular = async () => {
+            try {
+                const response = await fetch(`${API_BASE}/popular`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const { data } = await response.json();
+                renderGrid(data);
+            } catch (error) {
+                console.error('Failed to fetch popular anime:', error);
+                document.getElementById('popular-grid').innerHTML = `<p class="text-slate-400 col-span-full">Gagal memuat data. Silakan coba lagi nanti.</p>`;
+            } finally {
+                 gsap.to(loader, { opacity: 0, duration: 0.5, onComplete: () => loader.style.display = 'none' });
+            }
+        };
+
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+            if (query) {
+                window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+            }
+        });
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+             const tl = gsap.timeline();
+             tl.to(loader, { opacity: 0, duration: 0.5, delay: 0.5 })
+               .from('header', { y: -100, opacity: 0, duration: 0.8 }, "-=0.2")
+               .from('#popular-content > h1', {x: -50, opacity: 0, duration: 0.6}, "-=0.5");
+             
+             fetchPopular();
+        });
+    </script>
+</body>
+</html>

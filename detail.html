@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Anime - KYNAYNIME</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f172a; color: #e2e8f0; }
+        .shine-effect { position: relative; overflow: hidden; }
+        .shine-effect::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%); transform: rotate(25deg); transition: all 0.6s ease; opacity: 0; pointer-events: none; }
+        .shine-effect:hover::after { opacity: 1; transform: translate(25%, 25%) rotate(25deg); }
+        .header-shine::after { background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%); animation: shine-animation 5s infinite linear; }
+        @keyframes shine-animation { 0% { transform: translateX(-150%) rotate(25deg); opacity: 0; } 50% { transform: translateX(0) rotate(25deg); opacity: 1; } 100% { transform: translateX(150%) rotate(25deg); opacity: 0; } }
+        .loader { border-top-color: #3b82f6; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <div id="loader" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm flex justify-center items-center z-[100]">
+        <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-500 h-12 w-12"></div>
+    </div>
+
+    <header class="bg-slate-900/60 backdrop-blur-lg sticky top-0 z-50 shadow-lg shadow-slate-900/20">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-extrabold text-white shine-effect header-shine">KYNAYNIME</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="index.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Home</a>
+                    <a href="popular.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Populer</a>
+                    <a href="latest.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Terbaru</a>
+                    <a href="movie.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Movie</a>
+                </div>
+                <div class="flex-1 max-w-xs ml-4">
+                    <form id="searchForm" class="relative">
+                        <input id="searchInput" type="search" placeholder="Cari anime..." class="w-full bg-slate-800 text-slate-300 rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                        <button type="submit" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                            <svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" /></svg>
+                        </button>
+                    </form>
+                </div>
+                <div class="md:hidden ml-2">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="md:hidden hidden pb-3">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                     <a href="index.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                    <a href="popular.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Populer</a>
+                    <a href="latest.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Terbaru</a>
+                    <a href="movie.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Movie</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-screen">
+        <div id="detail-container">
+            <div class="animate-pulse flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/3 lg:w-1/4">
+                    <div class="aspect-[3/4] bg-slate-700 rounded-lg"></div>
+                </div>
+                <div class="md:w-2/3 lg:w-3/4">
+                    <div class="h-10 bg-slate-700 rounded w-3/4 mb-4"></div>
+                    <div class="h-4 bg-slate-700 rounded w-1/2 mb-6"></div>
+                    <div class="h-24 bg-slate-700 rounded mb-8"></div>
+                    <div class="h-8 bg-slate-700 rounded w-1/4"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="episodes-section" class="mt-12 opacity-0">
+             <h2 class="text-2xl font-bold text-white mb-4 border-l-4 border-blue-500 pl-4">Daftar Episode</h2>
+             <div id="episodes-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+             </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-900/80 mt-12 border-t border-slate-800">
+        <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-slate-400 text-sm">
+            &copy; 2025 KYNAYNIME — Dibuat oleh Farhan Kertadiwangsa
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        const API_BASE = 'https://www.sankavollerei.com/anime/stream';
+        const loader = document.getElementById('loader');
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+        const detailContainer = document.getElementById('detail-container');
+        const episodesGrid = document.getElementById('episodes-grid');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        const renderDetail = (anime) => {
+            document.title = `${anime.title} - KYNAYNIME`;
+            const genresHTML = anime.genres.map(genre => `<span class="bg-slate-700 text-slate-300 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">${genre}</span>`).join('');
+            
+            detailContainer.innerHTML = `
+                <div class="flex flex-col md:flex-row gap-6 md:gap-8">
+                    <div class="md:w-1/3 lg:w-1/4 flex-shrink-0 opacity-0" id="detail-poster-wrapper">
+                        <img id="detail-poster" src="${anime.poster}" alt="${anime.title}" class="w-full h-auto object-cover rounded-lg shadow-xl shadow-slate-900/50">
+                    </div>
+                    <div class="md:w-2/3 lg:w-3/4 opacity-0" id="detail-info">
+                        <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-2">${anime.title}</h1>
+                        <div class="flex flex-wrap gap-2 mb-6">${genresHTML}</div>
+                        <h2 class="text-xl font-semibold text-white mb-2">Sinopsis</h2>
+                        <p class="text-slate-300 leading-relaxed">${anime.synopsis}</p>
+                    </div>
+                </div>
+            `;
+            
+            if (anime.episodes && anime.episodes.length > 0) {
+                
+                episodesGrid.innerHTML = anime.episodes.map(ep => `
+                    <a href="episode.html?slug=${ep.eps_slug}" class="block bg-slate-800 text-center text-white font-medium py-3 px-4 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 shadow-md">${ep.eps_title}</a>
+                `).join('');
+            } else {
+                 document.getElementById('episodes-section').innerHTML = '<p class="text-slate-400">Tidak ada episode yang tersedia untuk judul ini.</p>';
+            }
+        };
+
+        const fetchDetail = async (slug) => {
+            try {
+                const response = await fetch(`${API_BASE}/anime/${slug}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const data = await response.json();
+                renderDetail(data);
+
+                
+                gsap.timeline()
+                    .to('#detail-poster-wrapper', { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' })
+                    .to('#detail-info', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, "-=0.5")
+                    .to('#episodes-section', { opacity: 1, y: 0, duration: 0.5 }, "-=0.4");
+                    
+            } catch (error) {
+                console.error('Failed to fetch anime detail:', error);
+                detailContainer.innerHTML = `<p class="text-slate-400 text-center">Gagal memuat detail anime. Mungkin slug tidak valid atau terjadi masalah jaringan.</p>`;
+            } finally {
+                gsap.to(loader, { opacity: 0, duration: 0.5, onComplete: () => loader.style.display = 'none' });
+            }
+        };
+
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+            if (query) {
+                window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+            }
+        });
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get('slug');
+
+            if (slug) {
+                 const tl = gsap.timeline();
+                 tl.to(loader, { opacity: 0, duration: 0.5, delay: 0.5 })
+                   .from('header', { y: -100, opacity: 0, duration: 0.8 }, "-=0.2");
+                
+                
+                gsap.set('#detail-poster-wrapper', { opacity: 0, x: -50 });
+                gsap.set('#detail-info', { opacity: 0, y: 20 });
+                gsap.set('#episodes-section', { opacity: 0, y: 20 });
+
+                fetchDetail(slug);
+            } else {
+                detailContainer.innerHTML = `<p class="text-slate-400 text-center">Anime tidak ditemukan. Pastikan URL sudah benar.</p>`;
+                gsap.to(loader, { opacity: 0, duration: 0.5, onComplete: () => loader.style.display = 'none' });
+            }
+        });
+    </script>
+</body>
+</html>
