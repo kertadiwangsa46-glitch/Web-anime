@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rilisan Terbaru - KYNAYNIME</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lucide-react@0.395.0/dist/umd/lucide.min.js"></script>
+
+    <style>
+        
+        :root {
+            --color-bg: #0f172a;
+            --color-primary: #3b82f6;
+            --color-secondary: #1e3a8a;
+            --color-text: #e2e8f0;
+            --color-text-dim: #94a3b8;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            padding-bottom: 60px; 
+        }
+
+        
+        .header-shine, .title-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        .header-shine::after, .title-shine::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -150%;
+            width: 200%;
+            height: 200%;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: rotate(25deg);
+            animation: shine-animation 5s infinite linear;
+            pointer-events: none;
+        }
+        @keyframes shine-animation {
+            0% { left: -150%; }
+            50% { left: 150%; }
+            100% { left: 150%; }
+        }
+
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        .shine-effect::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -100%;
+            width: 200%;
+            height: 200%;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: rotate(25deg);
+            transition: left 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .shine-effect:hover::after {
+            opacity: 1;
+            left: 100%;
+        }
+
+        .bottom-nav-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        .bottom-nav-shine::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -100%;
+            width: 50%;
+            height: 200%;
+            background-image: linear-gradient(to right, rgba(59, 130, 246, 0) 0%, rgba(59, 130, 246, 0.3) 50%, rgba(59, 130, 246, 0) 100%);
+            transform: skewX(-25deg);
+            animation: shine-animation-bottom 6s infinite linear;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        
+        .loader {
+            border-top-color: var(--color-primary);
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .gsap-fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* === START: HERO BANNER STYLES (COPIED FROM POPULAR.HTML) === */
+        #hero-banner {
+            opacity: 0; 
+            aspect-ratio: 16 / 7; 
+        }
+        
+        @media (max-width: 768px) {
+            #hero-banner {
+                aspect-ratio: 4 / 3; 
+            }
+        }
+        
+        @media (max-width: 640px) {
+            #hero-banner {
+                aspect-ratio: 1 / 1; 
+            }
+        }
+
+        .hero-slide {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .blur-bg {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            object-fit: cover;
+            filter: blur(20px) brightness(0.6);
+            transform: scale(1.1);
+            z-index: 1;
+        }
+
+        .poster-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            height: 90%;
+            z-index: 2;
+            border-radius: 0.375rem; 
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .poster-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 3;
+            padding: 2rem 2.5rem;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 20%, rgba(15, 23, 42, 0));
+            
+            /* === PENYESUAIAN CSS === */
+            /* Membuat overlay setinggi banner agar elemen 'absolute' di dalamnya (hero-rank) bisa diposisikan ke atas */
+            top: 0; 
+            /* Menggunakan flexbox untuk mendorong konten (judul, tombol) ke bawah, menjaga layout asli */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            /* === AKHIR PENYESUAIAN === */
+        }
+
+        @media (min-width: 768px) {
+            .poster-container {
+                left: 30%;
+                height: 100%;
+                transform: translate(-50%, -50%) scale(1.1);
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .hero-overlay {
+                left: 50%;
+                bottom: 50%;
+                transform: translateY(50%);
+                background: linear-gradient(to right, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.8) 30%, rgba(15, 23, 42, 1) 60%);
+                padding: 2rem;
+                width: 50%;
+                
+                /* === PENYESUAIAN CSS === */
+                /* Mengatur ulang 'top' dan 'display' untuk tata letak desktop */
+                top: auto;
+                display: block;
+                /* === AKHIR PENYESUAIAN === */
+            }
+        }
+        
+@media (min-width: 1024px) {
+     .poster-container {
+        left: 25%;
+     }
+     .hero-overlay {
+        padding: 3rem;
+     }
+}
+
+/* === FIX GLOBAL: Posisikan tag episode di pojok kanan atas banner di semua ukuran layar === */
+#hero-banner {
+    position: relative !important;
+}
+
+#hero-rank {
+    position: absolute !important;
+    top: 0.5rem !important;
+    right: 0.5rem !important;
+    z-index: 9999 !important;
+    margin: 0 !important;
+    transform: none !important;
+}
+
+@media (min-width: 768px) {
+    #hero-rank {
+        top: 1rem !important;
+        right: 1rem !important;
+    }
+}
+/* === END FIX === */
+
+/* === END: HERO BANNER STYLES === */
+        /* === END: HERO BANNER STYLES === */
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    
+    <div id="loader" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm flex justify-center items-center z-[100]">
+        <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-500 h-12 w-12"></div>
+    </div>
+
+    
+    <header class="bg-slate-900/60 backdrop-blur-lg sticky top-0 z-50 shadow-lg shadow-slate-900/20">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-extrabold text-white header-shine">KYNAYNIME</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="index.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Home</a>
+                    <a href="popular.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Populer</a>
+                    <a href="latest.html" class="text-blue-400 font-semibold bg-slate-800/50 px-3 py-2 rounded-md text-sm">Terbaru</a>
+                    <a href="movie.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Movie</a>
+                </div>
+                <div class="flex-1 max-w-xs ml-4">
+                    <form id="searchForm" class="relative">
+                        <input id="searchInput" type="search" placeholder="Cari anime..." class="w-full bg-slate-800 text-slate-300 rounded-md py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                        <button type="submit" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                            <svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+                 <div class="md:hidden ml-2">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+          
+            <div id="mobile-menu" class="md:hidden hidden pb-3">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="index.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                    <a href="popular.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Populer</a>
+                    <a href="latest.html" class="text-blue-400 block px-3 py-2 rounded-md text-base font-medium bg-slate-800/50">Terbaru</a>
+                    <a href="movie.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Movie</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- === START: HERO BANNER (COPIED FROM POPULAR.HTML) === -->
+    <section id="hero-banner" class="relative rounded-md overflow-hidden mb-12 shadow-2xl shadow-blue-900/20 bg-slate-900" style="opacity: 0; transform: translateY(30px);">
+        <div class="hero-slide">
+            <img id="hero-bg" src="https://placehold.co/1280x720/0f172a/1e3a8a?text=Loading..." alt="Loading Latest Release" class="blur-bg">
+            
+            <div class="poster-container">
+                <img id="hero-poster" src="https://placehold.co/400x600/0f172a/1e3a8a?text=Loading..." alt="Loading Latest Poster" class="poster-img">
+            </div>
+            
+            <div class="hero-overlay">
+                <!-- Elemen ini sekarang akan diposisikan relatif terhadap .hero-overlay yang sudah full-height, sehingga 'top-4 right-4' akan menempatkannya di pojok kanan atas banner -->
+                <p id="hero-rank" class="absolute top-4 right-4 md:top-6 md:right-6 bg-blue-600 text-white text-base md:text-lg font-bold px-3 py-1.5 rounded-md shadow-lg">Loading...</p>
+                
+                <!-- Konten ini akan didorong ke bawah oleh 'justify-content: flex-end' pada .hero-overlay -->
+                <div>
+                    <h2 id="hero-title" class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">Memuat Judul...</h2>
+                    
+                    <a id="hero-watch-btn" href="#" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-md transition-transform duration-300 hover:scale-105 shadow-lg shadow-blue-600/30 inline-block">
+                        <span class="flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            <span>Watch Now</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- === END: HERO BANNER === -->
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <section id="latest-content" class="gsap-fade-in-up">
+            <h1 class="text-3xl font-bold text-white mb-6 border-l-4 border-blue-500 pl-4">Rilisan Terbaru</h1>
+            <div id="latest-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
+                
+                ${Array(18).fill('').map(() => `
+                    <div class="group block bg-slate-800 rounded-md overflow-hidden animate-pulse">
+                        <div class="relative pt-[140%] bg-slate-700"></div>
+                        <div class="p-3">
+                            <div class="h-4 bg-slate-700 rounded w-3/4"></div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+    </main>
+
+    
+    <nav class="fixed bottom-0 left-0 right-0 h-[50px] bg-slate-900/70 backdrop-blur-md z-50 shadow-[0_-5px_20px_rgba(0,0,0,0.2)] border-t border-slate-800 flex items-center justify-center">
+        <div class="text-sm text-blue-300/80 font-medium bottom-nav-shine hover:text-blue-300 transition-colors">
+            © KYNAYNIME | Created by Farhan Kertadiwangsa
+        </div>
+    </nav>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const API_BASE = 'https://www.sankavollerei.com/anime/stream';
+        const loader = document.getElementById('loader');
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuIcons = mobileMenuButton.querySelectorAll('svg');
+
+        const createAnimeCard = (anime) => `
+            <a href="episode.html?slug=${anime.slug}" class="group block bg-slate-800 rounded-md overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1 shine-effect opacity-0" style="transform: translateY(20px);">
+                <div class="relative pt-[140%]">
+                    <img src="${anime.poster}" alt="${anime.title}" class="absolute top-0 left-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='https://placehold.co/400x600/0f172a/e2e8f0?text=Error'; this.onerror=null;">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                    <span class="absolute top-2 left-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-md shadow-md">Eps ${anime.episode}</span>
+                </div>
+                <div class="p-3">
+                    <h3 class="font-semibold text-white truncate group-hover:text-blue-400 transition">${anime.title}</h3>
+                </div>
+            </a>
+        `;
+
+        const renderGrid = (data) => {
+            const grid = document.getElementById('latest-grid');
+            if (!grid) return;
+            grid.innerHTML = data.map(createAnimeCard).join('');
+            
+            gsap.to('#latest-grid > a', {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                stagger: 0.05,
+                ease: 'power2.out',
+            });
+        };
+        
+        const initScrollTriggers = () => {
+            gsap.utils.toArray('.gsap-fade-in-up').forEach((section) => {
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 85%',
+                        toggleActions: 'play none none none',
+                    }
+                });
+                tl.to(section, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
+                  .from(section.querySelectorAll('h1'), { opacity: 0, y: 20, stagger: 0.1 }, "-=0.5");
+            });
+        };
+
+        const fetchLatest = async () => {
+            try {
+                const response = await fetch(`${API_BASE}/latest`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const { data } = await response.json();
+                
+                await populateAndAnimateHero(data[0]);
+                renderGrid(data);
+
+            } catch (error) {
+                console.error('Failed to fetch latest anime:', error);
+                document.getElementById('latest-grid').innerHTML = `<p class="text-slate-400 col-span-full">Gagal memuat data. Silakan coba lagi nanti.</p>`;
+                document.getElementById('hero-banner').style.display = 'none';
+            }
+        };
+
+        // === START: MODIFIED JS FUNCTION FOR HERO BANNER ===
+        const populateAndAnimateHero = async (animeData) => {
+            if (!animeData) return;
+
+            // Select elements from the new HTML structure
+            const heroBanner = document.getElementById('hero-banner');
+            const heroBg = document.getElementById('hero-bg');
+            const heroPoster = document.getElementById('hero-poster');
+            const heroTitle = document.getElementById('hero-title');
+            const heroWatchBtn = document.getElementById('hero-watch-btn');
+            const heroRank = document.getElementById('hero-rank');
+
+            // Populate data
+            heroBg.src = animeData.poster;
+            heroPoster.src = animeData.poster;
+            heroPoster.alt = animeData.title;
+            heroTitle.textContent = animeData.title;
+            // Use episode number for the rank tag, which is fitting for "Latest"
+            heroRank.textContent = `Eps ${animeData.episode}`;
+
+            // Create the correct link for the "Watch Now" button
+            const detailSlug = animeData.slug.replace(/-episode-\d+$/, '');
+            heroWatchBtn.href = `detail.html?slug=${detailSlug}`;
+
+            // GSAP Animation copied from popular.html
+            gsap.to('#hero-banner', { 
+                opacity: 1, 
+                y: 0, 
+                duration: 0.8, 
+                ease: 'power3.out',
+                delay: 0.2
+            });
+            
+            // Re-implement parallax scroll effect for the new background image
+            gsap.to(heroBg, {
+                y: '25%',
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: heroBanner,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true
+                }
+            });
+        };
+        // === END: MODIFIED JS FUNCTION ===
+
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+            if (query) {
+                window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+            }
+        });
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenuIcons[0].classList.toggle('hidden');
+            mobileMenuIcons[1].classList.toggle('hidden');
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+             const tl = gsap.timeline({
+                onComplete: () => {
+                    loader.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+             });
+             
+            document.body.style.overflow = 'hidden';
+
+            tl.to(loader, { opacity: 0, duration: 0.5 })
+              .from('header', { y: -100, opacity: 0, duration: 0.8, ease: 'power3.out' }, "-=0.2");
+
+            initScrollTriggers();
+            fetchLatest();
+            
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>
