@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYNAYNIME - Nonton Anime Gratis Subtitle Indonesia</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lucide-react@0.395.0/dist/umd/lucide.min.js"></script>
+
+    <style>
+        :root {
+            --color-bg: #0f172a;
+            --color-primary: #3b82f6;
+            --color-secondary: #1e3a8a;
+            --color-text: #e2e8f0;
+            --color-text-dim: #94a3b8;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            
+            padding-bottom: 60px; 
+        }
+
+        
+        .header-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        .header-shine::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: rotate(25deg);
+            animation: shine-animation 5s infinite linear;
+            opacity: 0;
+            pointer-events: none;
+        }
+        @keyframes shine-animation {
+            0% { transform: translateX(-150%) rotate(25deg); opacity: 0.5; }
+            50% { transform: translateX(0) rotate(25deg); opacity: 1; }
+            100% { transform: translateX(150%) rotate(25deg); opacity: 0.5; }
+        }
+
+        
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        .shine-effect::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -100%;
+            width: 200%;
+            height: 200%;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: rotate(25deg);
+            transition: left 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .shine-effect:hover::after {
+            opacity: 1;
+            left: 100%;
+        }
+
+        
+        .bottom-nav-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        .bottom-nav-shine::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -100%;
+            width: 50%;
+            height: 200%;
+            background-image: linear-gradient(to right, rgba(59, 130, 246, 0) 0%, rgba(59, 130, 246, 0.3) 50%, rgba(59, 130, 246, 0) 100%);
+            transform: skewX(-25deg);
+            animation: shine-animation-bottom 6s infinite linear;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        @keyframes shine-animation-bottom {
+            0% { left: -100%; }
+            50% { left: 150%; }
+            100% { left: 150%; }
+        }
+
+        
+        .loader {
+            border-top-color: var(--color-primary);
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        
+        #hero-slider {
+            opacity: 0; 
+            aspect-ratio: 16 / 7; 
+        }
+        
+        @media (max-width: 768px) {
+            #hero-slider {
+                aspect-ratio: 4 / 3; 
+            }
+        }
+        
+        @media (max-width: 640px) {
+            #hero-slider {
+                aspect-ratio: 1 / 1; 
+            }
+        }
+
+        .hero-slide {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        
+        .blur-bg {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            object-fit: cover;
+            filter: blur(20px) brightness(0.6);
+            transform: scale(1.1);
+            z-index: 1;
+        }
+
+        
+        .poster-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            height: 90%;
+            z-index: 2;
+            border-radius: 0.375rem; 
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .poster-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        
+        .hero-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 3;
+            padding: 2rem 2.5rem;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 20%, rgba(15, 23, 42, 0));
+        }
+
+        
+        @media (min-width: 768px) {
+            .poster-container {
+                left: 30%;
+                height: 100%;
+                transform: translate(-50%, -50%) scale(1.1);
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .hero-overlay {
+                left: 50%;
+                bottom: 50%;
+                transform: translateY(50%);
+                background: linear-gradient(to right, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.8) 30%, rgba(15, 23, 42, 1) 60%);
+                padding: 2rem;
+                width: 50%;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+             .poster-container {
+                left: 25%;
+             }
+             .hero-overlay {
+                padding: 3rem;
+             }
+        }
+
+        
+        .swiper-pagination-bullet {
+            background-color: rgba(255, 255, 255, 0.5);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        .swiper-pagination-bullet-active {
+            background-color: var(--color-primary);
+            width: 20px;
+            border-radius: 4px;
+        }
+
+        
+        .gsap-fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    
+    <div id="loader" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm flex justify-center items-center z-[100]">
+        <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-500 h-12 w-12"></div>
+    </div>
+
+    
+    <header class="bg-slate-900/60 backdrop-blur-lg sticky top-0 z-50 shadow-lg shadow-slate-900/20">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-extrabold text-white header-shine">KYNAYNIME</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="index.html" class="text-blue-400 font-semibold bg-slate-800/50 px-3 py-2 rounded-md text-sm">Home</a>
+                    <a href="popular.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Populer</a>
+                    <a href="latest.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Terbaru</a>
+                    <a href="movie.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Movie</a>
+                </div>
+                <div class="flex-1 max-w-xs ml-4">
+                    <form id="searchForm" class="relative">
+                        
+                        <input id="searchInput" type="search" placeholder="Cari anime..." class="w-full bg-slate-800 text-slate-300 rounded-md py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                        <button type="submit" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                            <svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+                 <div class="md:hidden ml-2">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div id="mobile-menu" class="md:hidden hidden pb-3">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="index.html" class="text-blue-400 block px-3 py-2 rounded-md text-base font-medium bg-slate-800/50">Home</a>
+                    <a href="popular.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Populer</a>
+                    <a href="latest.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Terbaru</a>
+                    <a href="movie.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Movie</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        
+        <section id="hero-slider" class="relative rounded-md overflow-hidden mb-12 shadow-2xl shadow-blue-900/20 swiper">
+            <div class="swiper-wrapper">
+                
+                
+                <div class="swiper-slide hero-slide bg-slate-900" id="hero-slide-latest">
+                    <img src="https://placehold.co/1280x720/0f172a/1e3a8a?text=Loading..." alt="Loading Latest" class="blur-bg">
+                    <div class="poster-container">
+                        <img src="https://placehold.co/400x600/0f172a/1e3a8a?text=Loading..." alt="Loading Latest Poster" class="poster-img">
+                    </div>
+                    <div class="hero-overlay">
+                        <h2 class="hero-slide-title text-3xl md:text-4xl font-bold mb-4 text-white">Rilisan Terbaru</h2>
+                        <a href="latest.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded-md transition-transform duration-300 hover:scale-105 shadow-lg shadow-blue-600/30">
+                            Lihat Semua
+                        </a>
+                    </div>
+                </div>
+                
+                
+                <div class="swiper-slide hero-slide bg-slate-900" id="hero-slide-popular">
+                    <img src="https://placehold.co/1280x720/0f172a/1e3a8a?text=Loading..." alt="Loading Popular" class="blur-bg">
+                    <div class="poster-container">
+                        <img src="https://placehold.co/400x600/0f172a/1e3a8a?text=Loading..." alt="Loading Popular Poster" class="poster-img">
+                    </div>
+                    <div class="hero-overlay">
+                        <h2 class="hero-slide-title text-3xl md:text-4xl font-bold mb-4 text-white">Paling Populer</h2>
+                        <a href="popular.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded-md transition-transform duration-300 hover:scale-105 shadow-lg shadow-blue-600/30">
+                            Lihat Semua
+                        </a>
+                    </div>
+                </div>
+
+                
+                <div class="swiper-slide hero-slide bg-slate-900" id="hero-slide-movie">
+                    <img src="https://placehold.co/1280x720/0f172a/1e3a8a?text=Loading..." alt="Loading Movie" class="blur-bg">
+                    <div class="poster-container">
+                        <img src="https://placehold.co/400x600/0f172a/1e3a8a?text=Loading..." alt="Loading Movie Poster" class="poster-img">
+                    </div>
+                    <div class="hero-overlay">
+                        <h2 class="hero-slide-title text-3xl md:text-4xl font-bold mb-4 text-white">Rekomendasi Movie</h2>
+                        <a href="movie.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded-md transition-transform duration-300 hover:scale-105 shadow-lg shadow-blue-600/30">
+                            Lihat Semua
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="swiper-pagination"></div>
+        </section>
+
+        
+        <div id="content" class="space-y-12">
+            
+            
+            <section id="latest" class="gsap-fade-in-up">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-white">Rilisan Terbaru</h2>
+                    <a href="latest.html" class="text-blue-400 hover:text-blue-300 transition text-sm font-medium">Lihat Semua &rarr;</a>
+                </div>
+                
+                <div id="latest-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
+                    
+                    ${Array(6).fill(createSkeletonCard()).join('')}
+                </div>
+            </section>
+            
+            
+            <section id="popular" class="gsap-fade-in-up">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-white">Paling Populer</h2>
+                    <a href="popular.html" class="text-blue-400 hover:text-blue-300 transition text-sm font-medium">Lihat Semua &rarr;</a>
+                </div>
+                <div id="popular-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
+                    
+                    ${Array(6).fill(createSkeletonCard()).join('')}
+                </div>
+            </section>
+
+            
+            <section id="movie" class="gsap-fade-in-up">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-white">Rekomendasi Movie</h2>
+                     <a href="movie.html" class="text-blue-400 hover:text-blue-300 transition text-sm font-medium">Lihat Semua &rarr;</a>
+                </div>
+                <div id="movie-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
+                    
+                    ${Array(12).fill(createSkeletonCard()).join('')}
+                </div>
+            </section>
+        </div>
+    </main>
+
+    
+    <nav class="fixed bottom-0 left-0 right-0 h-[50px] bg-slate-900/70 backdrop-blur-md z-50 shadow-[0_-5px_20px_rgba(0,0,0,0.2)] border-t border-slate-800 flex items-center justify-center">
+        <div class="text-sm text-blue-300/80 font-medium bottom-nav-shine hover:text-blue-300 transition-colors">
+            © KYNAYNIME | Created by Farhan Kertadiwangsa
+        </div>
+    </nav>
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+       
+        gsap.registerPlugin(ScrollTrigger);
+
+       
+        const API_BASE = 'https://www.sankavollerei.com/anime/stream';
+
+       
+        const loader = document.getElementById('loader');
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuIcons = mobileMenuButton.querySelectorAll('svg');
+
+        
+        function createSkeletonCard() {
+            return `
+                <div class="group block bg-slate-800 rounded-md overflow-hidden animate-pulse">
+                    <div class="relative pt-[140%] bg-slate-700"></div>
+                    <div class="p-3">
+                        <div class="h-4 bg-slate-700 rounded w-3/4"></div>
+                    </div>
+                </div>
+            `;
+        };
+
+        
+        const createAnimeCard = (anime, type) => {
+            let subtext = '';
+            if (type === 'latest' && anime.episode) {
+                subtext = `<span class="absolute top-2 left-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-md shadow-md">Eps ${anime.episode}</span>`;
+            } else if (type === 'movie' && anime.release) {
+                subtext = `<span class="absolute top-2 left-2 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded-md shadow-md">${anime.release}</span>`;
+            }
+
+            const slug = (type === 'latest' || type === 'episode') ? anime.slug.replace(/-episode-\d+$/, '') : anime.slug;
+
+            return `
+                <a href="detail.html?slug=${slug}" class="group block bg-slate-800 rounded-md overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1 shine-effect opacity-0" style="transform: translateY(20px);">
+                    <div class="relative pt-[140%]">
+                        <img src="${anime.poster}" alt="${anime.title}" class="absolute top-0 left-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='https://placehold.co/400x600/0f172a/e2e8f0?text=Error'; this.onerror=null;">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                        ${subtext}
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-semibold text-white truncate group-hover:text-blue-400 transition">${anime.title}</h3>
+                    </div>
+                </a>
+            `;
+        };
+        
+        
+        const renderGrid = (elementId, data, type) => {
+            const grid = document.getElementById(elementId);
+            if (!grid) return;
+            
+           
+            grid.innerHTML = data.map(anime => createAnimeCard(anime, type)).join('');
+            
+           
+            gsap.to(`#${elementId} > a`, {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                stagger: 0.05,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: grid,
+                    start: 'top 90%',
+                    toggleActions: 'play none none none',
+                }
+            });
+        };
+
+        
+        const fetchAndRender = async (endpoint, elementId, type, limit = 12) => {
+            try {
+                const response = await fetch(`${API_BASE}/${endpoint}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const { data } = await response.json();
+                const limitedData = data.slice(0, limit);
+                renderGrid(elementId, limitedData, type);
+            } catch (error) {
+                console.error(`Failed to fetch ${type}:`, error);
+                const grid = document.getElementById(elementId);
+                if (grid) grid.innerHTML = `<p class="text-slate-400 col-span-full">Gagal memuat data. Silakan coba lagi nanti.</p>`;
+            }
+        };
+
+        
+        const initHeroSlider = async () => {
+            const endpoints = [
+                { id: 'latest', endpoint: 'latest' },
+                { id: 'popular', endpoint: 'popular' },
+                { id: 'movie', endpoint: 'movie/page/1' }
+            ];
+
+            try {
+                const responses = await Promise.all(
+                    endpoints.map(ep => fetch(`${API_BASE}/${ep.endpoint}`).then(res => res.json()))
+                );
+
+                responses.forEach((response, index) => {
+                    const firstItem = response.data[0];
+                    if (firstItem) {
+                        const { id } = endpoints[index];
+                        const slide = document.getElementById(`hero-slide-${id}`);
+                        if (slide) {
+                            slide.querySelector('.blur-bg').src = firstItem.poster;
+                            slide.querySelector('.poster-img').src = firstItem.poster;
+                            slide.querySelector('.poster-img').alt = firstItem.title;
+                           
+                           
+                        }
+                    }
+                });
+
+            } catch (error) {
+                console.error('Failed to fetch hero slider data:', error);
+            }
+
+           
+            const swiper = new Swiper('.swiper', {
+                loop: true,
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true
+                },
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+            });
+
+           
+            gsap.to('#hero-slider', { opacity: 1, duration: 1, ease: 'power3.out' });
+        };
+
+        
+        const initScrollTriggers = () => {
+           
+            gsap.utils.toArray('.gsap-fade-in-up').forEach((section, i) => {
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 85%',
+                        toggleActions: 'play none none none',
+                    }
+                });
+
+                tl.to(section, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
+                  .from(section.querySelectorAll('h2, .flex > a'), { opacity: 0, y: 20, stagger: 0.1 }, "-=0.5");
+            });
+        };
+
+       
+
+       
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+            if (query) {
+                window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+            }
+        });
+
+       
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenuIcons[0].classList.toggle('hidden');
+            mobileMenuIcons[1].classList.toggle('hidden');
+        });
+
+       
+        document.addEventListener('DOMContentLoaded', () => {
+           
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    loader.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+
+            document.body.style.overflow = 'hidden';
+
+            tl.to(loader, { opacity: 0, duration: 0.5 })
+              .from('header', { y: -100, opacity: 0, duration: 0.8, ease: 'power3.out' }, "-=0.2");
+
+           
+            initHeroSlider();
+            initScrollTriggers();
+
+           
+            Promise.all([
+                fetchAndRender('latest', 'latest-grid', 'latest', 6),
+                fetchAndRender('popular', 'popular-grid', 'popular', 6),
+                fetchAndRender('movie/page/1', 'movie-grid', 'movie', 12)
+            ]);
+
+           
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>

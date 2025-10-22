@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Movie - KYNAYNIME</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f172a; color: #e2e8f0; }
+        .shine-effect { position: relative; overflow: hidden; }
+        .shine-effect::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%); transform: rotate(25deg); transition: all 0.6s ease; opacity: 0; pointer-events: none; }
+        .shine-effect:hover::after { opacity: 1; transform: translate(25%, 25%) rotate(25deg); }
+        .header-shine { position: relative; overflow: hidden; } 
+        .header-shine::after { 
+            content: ''; 
+            position: absolute; 
+            top: -50%; 
+            left: -50%; 
+            width: 200%; 
+            height: 200%;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%); 
+            animation: shine-animation 5s infinite linear; 
+            transform: rotate(25deg);
+            pointer-events: none; 
+        }
+        @keyframes shine-animation { 
+            0% { transform: translateX(-150%) rotate(25deg); opacity: 0; } 
+            30% { transform: translateX(0) rotate(25deg); opacity: 1; } 
+            70% { transform: translateX(150%) rotate(25deg); opacity: 0; }
+            100% { transform: translateX(150%) rotate(25deg); opacity: 0; }
+        }
+        .loader { border-top-color: #3b82f6; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .pagination-btn { transition: all 0.2s ease-in-out; }
+        .pagination-btn.active { background-color: #3b82f6; color: white; border-color: #3b82f6; }
+        .pagination-btn:not(.disabled):hover { background-color: #2563eb; border-color: #2563eb; transform: translateY(-2px); }
+        .pagination-btn.disabled { opacity: 0.5; cursor: not-allowed; }
+    </style>
+</head>
+<body class="overflow-x-hidden pb-20 md:pb-0">
+
+    
+    <div id="loader" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm flex justify-center items-center z-[100]">
+        <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-500 h-12 w-12"></div>
+    </div>
+
+  
+    
+    <header class="bg-slate-900/60 backdrop-blur-lg sticky top-0 z-50 shadow-lg shadow-slate-900/20 opacity-0">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-extrabold text-white header-shine">KYNAYNIME</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="index.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Home</a>
+                    <a href="popular.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Populer</a>
+                    <a href="latest.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Terbaru</a>
+                    <a href="movie.html" class="text-blue-400 font-semibold bg-slate-800/50 px-3 py-2 rounded-md text-sm">Movie</a>
+                </div>
+                <div class="flex-1 max-w-xs ml-4">
+                    <form id="searchForm" class="relative">
+                        
+                        <input id="searchInput" type="search" placeholder="Cari anime..." class="w-full bg-slate-800 text-slate-300 rounded-md py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 transition shadow-inner shadow-slate-900/50">
+                        <button type="submit" class="absolute inset-y-0 right-0 flex items-center pr-3 group">
+                            <svg class="h-5 w-5 text-slate-400 group-hover:text-blue-400 transition" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" /></svg>
+                        </button>
+                    </form>
+                </div>
+                 <div class="md:hidden ml-2">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                    </button>
+                </div>
+            </div>
+        
+            
+            <div id="mobile-menu" class="md:hidden hidden pb-3">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="index.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                    <a href="popular.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Populer</a>
+                    <a href="latest.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Terbaru</a>
+                    <a href="movie.html" class="text-blue-400 block px-3 py-2 rounded-md text-base font-medium bg-slate-800/50">Movie</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <section id="movie-content">
+            
+            <h1 class="text-3xl font-bold text-white mb-6 border-l-4 border-blue-500 pl-4 opacity-0">Daftar Movie</h1>
+            <div id="movie-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
+             
+                
+                ${Array(18).fill('').map(() => `
+                    <div class="bg-slate-800 rounded-lg shadow-lg overflow-hidden animate-pulse">
+                        <div class="pt-[140%] bg-slate-700"></div>
+                        <div class="p-3">
+                            <div class="h-4 bg-slate-700 rounded w-3/4"></div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            <div id="pagination" class="flex justify-center items-center mt-10 space-x-2"></div>
+        </section>
+    </main>
+
+    
+
+    
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-900/80 backdrop-blur-lg border-t border-slate-800 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-around items-center h-16">
+                <a href="index.html" class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-400 transition-colors group">
+                    <svg class="h-6 w-6 mb-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
+                    <span class="text-xs font-medium">Home</span>
+                </a>
+                <a href="popular.html" class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-400 transition-colors group">
+                    <svg class="h-6 w-6 mb-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-6.75c-.622 0-1.125.504-1.125 1.125V18.75m9 0h-9" /></svg>
+                    <span class="text-xs font-medium">Populer</span>
+                </a>
+                <a href="latest.html" class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-400 transition-colors group">
+                    <svg class="h-6 w-6 mb-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span class="text-xs font-medium">Terbaru</span>
+                </a>
+                <a href="movie.html" class="flex flex-col items-center justify-center text-blue-400 transition-colors group">
+                    
+                    <svg class="h-6 w-6 mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 4.5a3 3 0 00-3 3v9a3 3 0 003 3h15a3 3 0 003-3v-9a3 3 0 00-3-3h-15zm11.25 3a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm-3.75.75a.75.75 0 00-1.5 0v3.75a.75.75 0 001.5 0V9a.75.75 0 00-.75-.75zm-3.75.75a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9A.75.75 0 018.25 7.5z" /></svg>
+                    <span class="text-xs font-medium">Movie</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    
+    <footer class="bg-slate-900 mt-12 border-t border-slate-800">
+        <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-slate-400 text-sm">
+            &copy; 2025 KYNAYNIME — Dibuat dengan <span class="text-red-400">&hearts;</span> oleh Farhan Kertadiwangsa
+        </div>
+    </footer>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        const API_BASE = 'https://www.sankavollerei.com/anime/stream';
+        const loader = document.getElementById('loader');
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        let currentPage = 1;
+
+       
+        const createAnimeCard = (anime) => `
+            <a href="detail.html?slug=${anime.slug}" class="group block bg-slate-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-2 shine-effect opacity-0" style="transform: translateY(20px);">
+                <div class="relative pt-[140%] overflow-hidden">
+                    <img src="${anime.poster}" alt="${anime.title}" class="absolute top-0 left-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                    <span class="absolute top-2 left-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-md shadow-lg">${anime.release || 'Movie'}</span>
+                </div>
+                <div class="p-3">
+                    <h3 class="font-semibold text-white truncate group-hover:text-blue-400 transition-colors">${anime.title}</h3>
+                </div>
+            </a>
+        `;
+
+        const renderGrid = (data) => {
+            const grid = document.getElementById('movie-grid');
+            if (!grid) return;
+            grid.innerHTML = data.map(createAnimeCard).join('');
+            
+           
+            gsap.to('#movie-grid > a', { 
+                opacity: 1, 
+                y: 0, 
+                duration: 0.5, 
+                stagger: 0.05, 
+                ease: 'power2.out' 
+            });
+        };
+
+        const renderPagination = (hasMore) => {
+            const paginationContainer = document.getElementById('pagination');
+            let buttons = '';
+
+            buttons += `<button onclick="changePage(${currentPage - 1})" class="pagination-btn bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-sm font-medium ${currentPage === 1 ? 'disabled' : ''}" ${currentPage === 1 ? 'disabled' : ''}>&laquo; Prev</button>`;
+            buttons += `<button class="pagination-btn active px-4 py-2 text-sm font-medium border border-blue-500">${currentPage}</button>`;
+            buttons += `<button onclick="changePage(${currentPage + 1})" class="pagination-btn bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-sm font-medium ${!hasMore ? 'disabled' : ''}" ${!hasMore ? 'disabled' : ''}>Next &raquo;</button>`;
+            
+            paginationContainer.innerHTML = buttons;
+        };
+        
+        const showSkeleton = () => {
+             const grid = document.getElementById('movie-grid');
+             grid.innerHTML = Array(18).fill('').map(() => `
+                    <div class="bg-slate-800 rounded-lg shadow-lg overflow-hidden animate-pulse">
+                        <div class="pt-[140%] bg-slate-700"></div>
+                        <div class="p-3">
+                            <div class="h-4 bg-slate-700 rounded w-3/4"></div>
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        const fetchMovies = async (page) => {
+            showSkeleton();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            try {
+                const response = await fetch(`${API_BASE}/movie/page/${page}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const { data } = await response.json();
+                
+                const hasMore = data.length > 0;
+                
+                renderGrid(data);
+                renderPagination(hasMore);
+            } catch (error) {
+                console.error('Failed to fetch movies:', error);
+                document.getElementById('movie-grid').innerHTML = `<p class="text-slate-400 col-span-full">Gagal memuat data. Silakan coba lagi nanti.</p>`;
+            } finally {
+                
+                 gsap.to(loader, { opacity: 0, duration: 0.5, onComplete: () => loader.style.display = 'none' });
+            }
+        };
+
+        function changePage(page) {
+            if (page < 1) return;
+            currentPage = page;
+            const url = new URL(window.location);
+            url.searchParams.set('page', page);
+            window.history.pushState({}, '', url);
+            fetchMovies(page);
+        }
+
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+            if (query) {
+                window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+            }
+        });
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+       
+        document.addEventListener('DOMContentLoaded', () => {
+             const urlParams = new URLSearchParams(window.location.search);
+             currentPage = parseInt(urlParams.get('page')) || 1;
+             
+            
+            
+             gsap.to('header', { 
+                 y: 0, 
+                 opacity: 1, 
+                 duration: 0.8, 
+                 ease: 'power2.out',
+                 delay: 0.2
+             });
+             
+             gsap.to('#movie-content > h1', { 
+                 y: 0, 
+                 opacity: 1, 
+                 duration: 0.6, 
+                 ease: 'power2.out',
+                 delay: 0.4
+             });
+
+            
+             fetchMovies(currentPage);
+        });
+    </script>
+</body>
+</html>

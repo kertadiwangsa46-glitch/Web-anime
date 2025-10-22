@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nonton Anime - KYNAYNIME</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  
+  <style>
+    
+    body { 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      background-color: #0f172a; 
+      color: #e2e8f0; 
+      
+      padding-bottom: 60px;
+    }
+    
+    
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    
+    .header-shine {
+        position: relative;
+        overflow: hidden;
+    }
+    .header-shine::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+        transform: rotate(25deg);
+        animation: shine-animation 5s infinite linear;
+        opacity: 0;
+        pointer-events: none;
+    }
+    @keyframes shine-animation {
+        0% { transform: translateX(-150%) rotate(25deg); opacity: 0.5; }
+        50% { transform: translateX(0) rotate(25deg); opacity: 1; }
+        100% { transform: translateX(150%) rotate(25deg); opacity: 0.5; }
+    }
+
+    
+    .bottom-nav-shine {
+        position: relative;
+        overflow: hidden;
+    }
+    .bottom-nav-shine::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -100%;
+        width: 50%;
+        height: 200%;
+        background-image: linear-gradient(to right, rgba(59, 130, 246, 0) 0%, rgba(59, 130, 246, 0.3) 50%, rgba(59, 130, 246, 0) 100%);
+        transform: skewX(-25deg);
+        animation: shine-animation-bottom 6s infinite linear;
+        pointer-events: none;
+        opacity: 0.8;
+    }
+    @keyframes shine-animation-bottom {
+        0% { left: -100%; }
+        50% { left: 150%; }
+        100% { left: 150%; }
+    }
+
+
+    
+    .shine-effect { 
+      position: relative; 
+      overflow: hidden; 
+    }
+    .shine-effect::after { 
+      content: ''; 
+      position: absolute; 
+      top: -50%; 
+      left: -50%; 
+      width: 200%; 
+      height: 200%; 
+      background-image: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%); 
+      transform: rotate(25deg); 
+      transition: all 0.6s ease; 
+      opacity: 0; 
+      pointer-events: none; 
+    }
+    .shine-effect:hover::after { 
+      opacity: 1; 
+      transform: translate(25%, 25%) rotate(25deg); 
+    }
+
+    
+    .tab-button.active {
+      
+      color: #ffffff;
+      border-color: #3b82f6; 
+    }
+    
+    
+    
+    @media (max-width: 767px) {
+      .tab-button.active-mobile {
+        background-color: #2563eb; 
+        color: #ffffff;
+      }
+    }
+
+    
+    
+    .poster-placeholder {
+      background-color: #1e293b; 
+      color: #94a3b8; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+      user-select: none;
+      border: 2px dashed #475569; 
+    }
+    
+    
+    .card-hover-glow:hover {
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.3), 0 0 5px rgba(59, 130, 246, 0.2);
+    }
+
+    
+    .custom-scrollbar {
+      scrollbar-width: thin;
+      scrollbar-color: #334155 #1e293b; 
+    }
+    
+    
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #1e293b; 
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background-color: #334155; 
+      border-radius: 10px;
+      border: 2px solid #1e293b; 
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background-color: #475569; 
+    }
+  </style>
+</head>
+<body class="overflow-x-hidden">
+
+  
+  <header class="bg-slate-900/60 backdrop-blur-lg sticky top-0 z-50 shadow-lg shadow-slate-900/20">
+      <nav class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl"> 
+          <div class="flex items-center justify-between h-16">
+              <div class="flex items-center">
+                  
+                  <a href="index.html" class="text-2xl font-extrabold text-white header-shine">KYNAYNIME</a>
+              </div>
+              <div class="hidden md:flex items-center space-x-4">
+                  
+                  <a href="index.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Home</a>
+                  <a href="popular.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Populer</a>
+                  <a href="latest.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Terbaru</a>
+                  <a href="movie.html" class="text-slate-300 hover:bg-slate-800/50 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Movie</a>
+              </div>
+              <div class="flex-1 max-w-xs ml-4">
+                  <form id="searchForm" class="relative">
+                      
+                      <input id="searchInput" type="search" placeholder="Cari anime..." class="w-full bg-slate-800 text-slate-300 rounded-md py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                      <button type="submit" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                          <svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                              <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                          </svg>
+                      </button>
+                  </form>
+              </div>
+               <div class="md:hidden ml-2">
+                  
+                  <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                      <span class="sr-only">Open main menu</span>
+                      <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                      </svg>
+                      <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                  </button>
+              </div>
+          </div>
+          
+          <div id="mobile-menu" class="md:hidden hidden pb-3">
+              <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                  
+                  <a href="index.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                  <a href="popular.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Populer</a>
+                  <a href="latest.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Terbaru</a>
+                  <a href="movie.html" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Movie</a>
+              </div>
+          </div>
+      </nav>
+  </header>
+
+  
+  
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10 max-w-6xl">
+    
+    
+    
+    <div id="skeleton-loader">
+      <div class="animate-pulse">
+        
+        <div class="h-8 md:h-10 bg-slate-700 rounded w-3/4 mb-4 md:mb-5"></div>
+        
+        <div class="w-full aspect-video bg-slate-700 rounded-xl md:rounded-2xl mb-5 md:mb-8 shadow-lg"></div>
+        
+        
+        
+        <div class="flex md:hidden gap-3 items-start p-3 bg-slate-800/50 rounded-xl mb-6">
+            
+            <div class="w-20 h-28 bg-slate-700 rounded-lg flex-shrink-0"></div>
+            <div class="flex-1 space-y-3">
+                <div class="h-6 bg-slate-700 rounded w-3/4"></div>
+                <div class="h-4 bg-slate-700 rounded w-1/2"></div>
+                <div class="h-4 bg-slate-700 rounded w-1/3"></div>
+            </div>
+            <div class="w-16 h-8 bg-blue-600/50 rounded-md"></div>
+        </div>
+        
+        
+        <div class="hidden md:flex flex-col md:flex-row gap-6 md:gap-8 mb-8">
+          <div class="w-full md:w-1/3 lg:w-1/4 flex-shrink-0">
+            <div class="aspect-[3/4] bg-slate-700 rounded-lg"></div>
+          </div>
+          <div class="w-full md:w-2/3 lg:w-3/4">
+            <div class="flex justify-between items-start">
+              <div class="h-10 bg-slate-700 rounded w-3/4 mb-5"></div>
+              <div class="h-10 bg-slate-700 rounded w-20"></div>
+            </div>
+            <div class="flex flex-wrap gap-4 mb-4">
+              <div class="h-6 bg-slate-700 rounded-full w-24"></div>
+              <div class="h-6 bg-slate-700 rounded-full w-28"></div>
+            </div>
+            
+            <div class="h-24 bg-slate-700 rounded"></div>
+          </div>
+        </div>
+        
+        
+        <div class="p-1 bg-slate-800 rounded-lg flex gap-1 md:bg-transparent md:p-0 md:justify-center md:space-x-6 md:border-b md:border-slate-700 mt-6 md:mt-8">
+            <div class="h-10 rounded-md bg-blue-600 w-1/2 md:w-32 md:bg-slate-700 md:mb-[-2px]"></div>
+            <div class="h-10 rounded-md bg-slate-700 w-1/2 md:w-32 md:bg-transparent"></div>
+        </div>
+        
+        
+        <div class="max-h-[60vh] overflow-y-hidden md:max-h-none md:overflow-visible mt-6 md:mt-8">
+          
+          <div class="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-3">
+            ${Array(12).fill(`
+              <div class="flex items-center gap-3 p-2 bg-slate-700 rounded-lg">
+                <div class="w-20 h-14 bg-slate-600 rounded-md flex-shrink-0"></div> 
+                <div class="flex-1 space-y-2">
+                  <div class="h-4 bg-slate-600 rounded w-3/4"></div>
+                  <div class="h-3 bg-slate-600 rounded w-1/2"></div>
+                </div>
+                <div class="w-6 h-6 bg-slate-600 rounded-full"></div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    
+    <div id="content-wrapper" class="opacity-0" style="transform: translateY(20px);">
+      
+      
+      <h1 id="episode-title" class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-4 md:mb-5 opacity-0">Memuat Judul Episode...</h1>
+
+      
+      
+      <div id="video-player-container" 
+           class="bg-black rounded-xl md:rounded-2xl shadow-lg md:shadow-2xl shadow-blue-500/10 overflow-hidden opacity-0 
+                  transition-all duration-300 ease-out 
+                  md:hover:scale-[1.01] 
+                  md:hover:ring-4 md:hover:ring-blue-500/30">
+        
+        
+        <iframe id="video-player" 
+                class="w-full aspect-video" 
+                frameborder="0" 
+                allowfullscreen 
+                title="Anime Stream Player"
+                allow="autoplay; fullscreen; encrypted-media"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-presentation">
+        </iframe>
+      </div>
+      
+      
+      <div id="episode-navigation" class="hidden md:flex justify-between mt-4 mb-6 md:mb-8 opacity-0">
+        
+      </div>
+
+
+      
+      
+      <div class="mt-4 md:mt-0">
+        
+        
+        
+        
+        <div class="flex md:hidden items-start gap-3 p-3 bg-slate-800/50 rounded-xl opacity-0" id="info-wrapper-mobile">
+            
+            
+            <div class="w-20 flex-shrink-0 card-hover-glow transition-all duration-300 rounded-lg">
+                
+                <img id="anime-poster" src="" alt="Poster Anime" class="w-20 h-28 object-cover rounded-lg shadow-md aspect-[3/4]">
+            </div>
+            
+            
+            <div class="flex-1 min-w-0">
+                
+                <h2 id="anime-title" class="text-xl font-bold text-white truncate" style="line-height: 1.3;">Memuat Judul...</h2>
+                
+                
+                
+                <div id="anime-meta-info" class="flex items-center gap-1.5 text-yellow-400 mt-1">
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.868 2.884c.321-.772 1.415-.772 1.736 0l1.983 4.795a1.75 1.75 0 001.316.963h5.038c.84 0 1.18.971.55 1.504l-4.075 2.961a1.75 1.75 0 00-.65 1.83l1.54 4.576c.24 .718-.6 1.32-1.22.914l-4.074-2.96a1.75 1.75 0 00-2.06 0l-4.074 2.96c-.62.406-1.46.196-1.22-.914l1.54-4.576a1.75 1.75 0 00-.65-1.83L.94 10.146c-.63-.533-.29-1.504.55-1.504h5.038a1.75 1.75 0 001.316-.963l1.983-4.795z" clip-rule="evenodd" /></svg>
+                    <span class="font-bold text-white text-sm">...</span>
+                    <span class="text-sm text-slate-400">(...)</span>
+                </div>
+                <div id="studio-info-mobile" class="text-sm text-slate-400 mt-0.5">...</div> 
+                
+                
+                <div id="anime-genres" class="flex flex-wrap gap-1.5 mt-2">
+                    
+                </div>
+            </div>
+            
+            
+            
+            
+            <button class="flex-shrink-0 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1 px-3 rounded-md transition duration-300 shadow-md text-xs card-hover-glow" id="share-button">
+                Share
+            </button>
+        </div>
+
+
+        
+        <div class="hidden md:flex flex-col md:flex-row gap-6 md:gap-8 mb-8">
+            
+            
+            <div id="poster-wrapper" class="w-full md:w-1/3 lg:w-1/4 flex-shrink-0 opacity-0 card-hover-glow transition-all duration-300 rounded-xl">
+                
+                <img id="anime-poster" src="" alt="Poster Anime" class="w-full h-auto object-cover rounded-xl shadow-xl shadow-slate-900/50 aspect-[3/4]">
+            </div>
+            
+            
+            <div id="info-wrapper" class="w-full md:w-2/3 lg:w-3/4 opacity-0">
+                <div class="flex justify-between items-start mb-3">
+                    
+                    <h2 id="anime-title" class="text-2xl md:text-3xl font-bold text-white">Memuat Judul Anime...</h2>
+                    
+                    
+                    <button class="flex-shrink-0 bg-slate-700 hover:bg-slate-600 text-white font-medium py-2 px-4 rounded-lg transition duration-300 shine-effect flex items-center gap-2 card-hover-glow" id="share-button">
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.19.02.38.05.57.09M7.217 10.907v2.186m0-2.186l5.714 3.143m-5.714-5.329l5.714-3.143m0 0a2.25 2.25 0 100-2.186m0 2.186v2.186m0 0l-5.714 3.143m5.714-3.143l5.714 3.143m0 0a2.25 2.25 0 100 2.186m0-2.186v-2.186m0 0l-5.714-3.143" /></svg>
+                        <span class="hidden sm:inline">Share</span>
+                    </button>
+                </div>
+
+                
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-4 text-slate-300" id="anime-meta-info">
+                    
+                    <div class="flex items-center gap-1.5 text-yellow-400">
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.868 2.884c.321-.772 1.415-.772 1.736 0l1.983 4.795a1.75 1.75 0 001.316.963h5.038c.84 0 1.18.971.55 1.504l-4.075 2.961a1.75 1.75 0 00-.65 1.83l1.54 4.576c.24 .718-.6 1.32-1.22.914l-4.074-2.96a1.75 1.75 0 00-2.06 0l-4.074 2.96c-.62.406-1.46.196-1.22-.914l1.54-4.576a1.75 1.75 0 00-.65-1.83L.94 10.146c-.63-.533-.29-1.504.55-1.504h5.038a1.75 1.75 0 001.316-.963l1.983-4.795z" clip-rule="evenodd" /></svg>
+                        <span id="rating-score" class="font-bold text-white">...</span>
+                        <span id="rating-count" class="text-sm text-slate-400">(...)</span>
+                    </div>
+                    <span class="text-slate-600 hidden sm:inline">|</span>
+                    <div id="studio-info-desktop">
+                        <span class="font-medium text-slate-400">Studio:</span>
+                        <span id="studio-name" class="font-semibold text-white">...</span>
+                    </div>
+                </div>
+                
+                
+                <div id="anime-genres" class="flex flex-wrap gap-2 mb-6">
+                    
+                </div>
+                
+                
+                <h3 class="text-xl font-semibold text-white mb-2 border-l-4 border-blue-500 pl-3">Sinopsis Episode</h3>
+                
+                <p id="episode-synopsis" class="text-slate-300 leading-relaxed">Memuat sinopsis...</p>
+            </div>
+        </div>
+        
+        
+        
+        <div class="block md:hidden mt-6 opacity-0" id="synopsis-wrapper-mobile">
+            <h3 class="text-lg font-semibold text-white mb-2 border-l-4 border-blue-500 pl-3">Sinopsis Episode</h3>
+            <p id="episode-synopsis-mobile" class="text-slate-300 leading-relaxed text-sm">Memuat sinopsis...</p>
+        </div>
+
+      </div>
+
+      
+      <div id="tabs-wrapper" class="opacity-0 mt-6 md:mt-8">
+        
+        <div class="p-1 bg-slate-800 rounded-lg flex gap-1 md:bg-transparent md:p-0 md:justify-center md:space-x-6 md:border-b md:border-slate-700">
+          
+          <button class="tab-button active active-mobile font-semibold py-2 md:py-3 px-4 transition duration-300 w-1/2 md:w-auto rounded-md md:rounded-none bg-blue-600 text-white md:bg-transparent md:border-b-2 md:border-blue-500" data-tab="episodes">
+            Daftar Episode
+          </button>
+          
+          <button class="tab-button text-slate-300 hover:text-white font-semibold py-2 md:py-3 px-4 transition duration-300 w-1/2 md:w-auto rounded-md md:rounded-none bg-slate-700 md:bg-transparent hover:bg-slate-600 md:hover:bg-transparent md:border-b-2 md:border-transparent md:hover:border-slate-500" data-tab="related">
+            Anime Terkait
+          </button>
+        
+        </div>
+        
+        <div class="mt-6 md:mt-8 relative">
+          
+          
+          <div id="episodes-tab" 
+               class="tab-content max-h-[60vh] overflow-y-auto overflow-x-hidden md:max-h-none md:overflow-visible 
+                      pb-24 md:pb-0 rounded-lg bg-slate-800/20 md:bg-transparent p-2 md:p-0 custom-scrollbar">
+            <div id="episodes-grid" class="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-3">
+              
+            </div>
+          </div>
+          
+          
+          
+          <div id="related-tab" 
+               class="tab-content hidden max-h-[60vh] overflow-y-auto overflow-x-hidden md:max-h-none md:overflow-visible 
+                      pb-24 md:pb-0 rounded-lg bg-slate-800/20 md:bg-transparent p-2 md:p-0 custom-scrollbar">
+            <div id="related-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      
+      
+      <div id="episode-navigation-mobile" 
+           class="flex md:hidden justify-between gap-3 w-full px-2 mt-6 opacity-0 
+                  sticky bottom-4 z-10 
+                  backdrop-blur-md bg-slate-900/50 p-2 rounded-xl shadow-lg ring-1 ring-slate-700/50
+                  pb-safe">
+        
+      </div>
+
+    </div>
+    
+    
+    <div id="error-message" class="hidden text-center py-20">
+        <p class="text-red-400 text-lg">⚠️ Gagal memuat data anime. Periksa koneksi internetmu atau slug tidak valid.</p>
+    </div>
+
+  </main>
+
+  
+  
+  
+  
+  <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 h-[50px] bg-slate-900/70 backdrop-blur-md z-50 shadow-[0_-5px_20px_rgba(0,0,0,0.2)] border-t border-slate-800 flex items-center justify-center pb-safe">
+      <div class="text-sm text-blue-300/80 font-medium bottom-nav-shine hover:text-blue-300 transition-colors">
+          © KYNAYNIME | Created by Farhan Kertadiwangsa
+      </div>
+  </nav>
+
+
+  <script>
+   
+    const API_BASE = 'https://www.sankavollerei.com/anime/stream';
+    
+   
+    const NO_IMAGE_PLACEHOLDER_HTML = `
+        <div class="absolute top-0 left-0 w-full h-full object-cover rounded-t-lg poster-placeholder">
+            No Image
+        </div>
+    `;
+
+   
+    const skeletonLoader = document.getElementById('skeleton-loader');
+    const contentWrapper = document.getElementById('content-wrapper');
+    const errorMessage = document.getElementById('error-message');
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+   
+    const mobileMenuIcons = mobileMenuButton.querySelectorAll('svg');
+
+   
+    const episodeTitle = document.getElementById('episode-title');
+    const videoPlayerContainer = document.getElementById('video-player-container');
+    const videoPlayer = document.getElementById('video-player');
+    const episodeNavigation = document.getElementById('episode-navigation');
+    const episodesGrid = document.getElementById('episodes-grid');
+    const relatedGrid = document.getElementById('related-grid');
+    
+   
+    const mobileNavElement = document.getElementById('episode-navigation-mobile');
+    const synopsisMobileElement = document.getElementById('episode-synopsis-mobile');
+    const synopsisWrapperMobile = document.getElementById('synopsis-wrapper-mobile');
+    const infoWrapperMobile = document.getElementById('info-wrapper-mobile');
+
+
+   
+
+    const loadPageData = async (slug) => {
+      try {
+        const episodeResponse = await fetch(`${API_BASE}/episode/${slug}`);
+        if (!episodeResponse.ok) {
+          throw new Error(`Episode fetch failed: ${episodeResponse.status}`);
+        }
+        const episodeData = await episodeResponse.json();
+
+        if (!episodeData || !episodeData.anime_slug) {
+            throw new Error('Data episode tidak valid atau anime_slug tidak ditemukan.');
+        }
+
+        const animeResponse = await fetch(`${API_BASE}/anime/${episodeData.anime_slug}`);
+        if (!animeResponse.ok) {
+          throw new Error(`Anime fetch failed: ${animeResponse.status}`);
+        }
+        const animeData = await animeResponse.json();
+        
+        renderPage(episodeData, animeData);
+
+        const firstWordQuery = animeData.title.split(" ")[0];
+        fetchRelatedAnime(firstWordQuery); 
+
+        runEntryAnimations();
+        gsap.to(skeletonLoader, { 
+          opacity: 0, 
+          duration: 0.5, 
+          onComplete: () => skeletonLoader.style.display = 'none' 
+        });
+        gsap.to(contentWrapper, { 
+            opacity: 1, 
+            y: 0, 
+            duration: 0.6, 
+            ease: 'power2.out' 
+        });
+
+      } catch (error) {
+        console.error('Failed to load page data:', error);
+        errorMessage.classList.remove('hidden');
+        skeletonLoader.style.display = 'none';
+      }
+    };
+    
+    
+    const renderPage = (episode, anime) => {
+      document.title = `${episode.title} - ${anime.title} - KYNAYNIME`;
+
+     
+     
+      document.querySelectorAll('#episode-title').forEach(el => el.textContent = episode.title);
+      const synopsisText = episode.synopsis || 'Sinopsis untuk episode ini tidak tersedia.';
+     
+      document.querySelectorAll('#episode-synopsis').forEach(el => el.textContent = synopsisText);
+     
+      if (synopsisMobileElement) {
+        synopsisMobileElement.textContent = synopsisText;
+      }
+
+     
+      if (episode.stream_url) {
+       
+        let streamUrl = episode.stream_url;
+        if (streamUrl.startsWith('http://')) {
+            streamUrl = streamUrl.replace('http://', 'https://');
+        }
+        videoPlayer.src = streamUrl;
+      } else {
+        videoPlayerContainer.innerHTML = '<div class="w-full aspect-video bg-slate-800 flex items-center justify-center rounded-2xl"><p class="text-slate-400">Video stream tidak ditemukan.</p></div>';
+      }
+      
+     
+     
+      let navHTML_Desktop = '';
+      if (episode.prev_eps_slug) {
+        navHTML_Desktop += `<a href="episode.html?slug=${episode.prev_eps_slug}" class="bg-slate-700 text-slate-300 hover:bg-blue-600 hover:text-white font-medium py-2 px-5 rounded-lg transition duration-300 shine-effect card-hover-glow">
+          &larr; Episode Sebelumnya
+        </a>`;
+      } else {
+        navHTML_Desktop += '<div></div>'; 
+      }
+      if (episode.next_eps_slug) {
+        navHTML_Desktop += `<a href="episode.html?slug=${episode.next_eps_slug}" class="bg-slate-700 text-slate-300 hover:bg-blue-600 hover:text-white font-medium py-2 px-5 rounded-lg transition duration-300 shine-effect card-hover-glow">
+          Episode Selanjutnya &rarr;
+        </a>`;
+      }
+      episodeNavigation.innerHTML = navHTML_Desktop;
+      
+     
+     
+      let navHTML_Mobile = '';
+      const prevButtonClass = episode.prev_eps_slug 
+          ? 'bg-blue-600 hover:bg-blue-700 shadow-md hover:scale-105 card-hover-glow' 
+          : 'bg-slate-700 text-slate-500 cursor-not-allowed opacity-60';
+      const nextButtonClass = episode.next_eps_slug 
+          ? 'bg-blue-600 hover:bg-blue-700 shadow-md hover:scale-105 card-hover-glow' 
+          : 'bg-slate-700 text-slate-500 cursor-not-allowed opacity-60';
+      
+      const prevLink = episode.prev_eps_slug ? `href="episode.html?slug=${episode.prev_eps_slug}"` : 'disabled';
+      const nextLink = episode.next_eps_slug ? `href="episode.html?slug=${episode.next_eps_slug}"` : 'disabled';
+      
+      navHTML_Mobile = `
+          <a ${prevLink} class="w-1/2 py-3 text-white rounded-xl transition-all text-center font-semibold text-sm ${prevButtonClass}">
+            &larr; Sebelumnya
+          </a>
+          <a ${nextLink} class="w-1/2 py-3 text-white rounded-xl transition-all text-center font-semibold text-sm ${nextButtonClass}">
+            Selanjutnya &rarr;
+          </a>
+      `;
+      if(mobileNavElement) {
+        mobileNavElement.innerHTML = navHTML_Mobile;
+      }
+
+
+     
+      const posterSrc = anime.poster || 'https://placehold.co/300x400/0f172a/e2e8f0?text=No+Poster';
+     
+      document.querySelectorAll('#anime-poster').forEach(el => {
+        el.src = posterSrc;
+        el.alt = anime.title;
+      });
+     
+      document.querySelectorAll('#anime-title').forEach(el => el.textContent = anime.title);
+      
+     
+      const rating = anime.rating || 'N/A';
+      const studio = anime.studio || 'N/A';
+      
+      document.querySelectorAll('#anime-meta-info').forEach(el => {
+          const scoreEl = el.querySelector('.font-bold');
+          const countEl = el.querySelector('.text-slate-400');
+          if(scoreEl) scoreEl.textContent = rating;
+          if(countEl) countEl.textContent = `(${anime.status || 'Rating'})`;
+      });
+       if(document.getElementById('studio-info-mobile')) {
+         document.getElementById('studio-info-mobile').textContent = `Studio: ${studio}`;
+       }
+       if(document.getElementById('studio-name')) {
+         document.getElementById('studio-name').textContent = studio;
+       }
+
+
+     
+      let genreHTML = '';
+      if (anime.genres && anime.genres.length > 0) {
+        genreHTML = anime.genres.map(genre => 
+          `<span class="bg-slate-700 text-slate-300 text-xs font-medium mr-1.5 px-2.5 py-1 rounded-full">${genre}</span>`
+        ).join('');
+      }
+     
+      document.querySelectorAll('#anime-genres').forEach(el => el.innerHTML = genreHTML);
+
+     
+      if (anime.episodes && anime.episodes.length > 0) {
+        
+        const miniPosterUrl = anime.poster || 'https://placehold.co/160x90/1e293b/94a3b8?text=No+Thumb';
+
+        episodesGrid.innerHTML = anime.episodes.map(ep => {
+          const isActive = ep.eps_slug === episode.slug;
+         
+          const activeClass = isActive 
+            ? 'bg-blue-600/20 ring-2 ring-blue-500'
+            : 'bg-slate-800 hover:bg-slate-700/60 card-hover-glow';
+            
+          return `
+            <a href="episode.html?slug=${ep.eps_slug}" 
+               class="flex items-center gap-3 p-2 md:gap-4 md:p-3 ${activeClass} rounded-xl md:rounded-2xl transition duration-300 shadow-md shine-effect group transform hover:-translate-y-1">
+              
+              
+              <div class="flex-shrink-0 w-20 md:w-24 sm:w-32 rounded-lg overflow-hidden">
+                <img src="${miniPosterUrl}" alt="Thumbnail" class="w-full h-full object-cover aspect-video transition-transform duration-300 group-hover:scale-110" loading="lazy">
+              </div>
+              
+              
+              <div class="flex-1 min-w-0">
+                <h4 class="font-semibold text-white truncate transition-colors duration-300 text-sm md:text-base ${isActive ? 'text-blue-300' : 'group-hover:text-blue-400'}">
+                  ${ep.eps_title}
+                </h4>
+                <span class="text-sm text-slate-400 truncate block text-xs md:text-sm">${anime.title}</span>
+              </div>
+              
+              
+              <div class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-slate-700/50 rounded-full transition-all duration-300 ${isActive ? 'text-blue-400 bg-blue-500/20' : 'text-slate-300 group-hover:bg-blue-600 group-hover:text-white'}">
+                <svg class="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" /></svg>
+              </div>
+            </a>
+          `
+        }).join('');
+      } else {
+        episodesGrid.innerHTML = '<p class="text-slate-400 col-span-full text-center">Tidak ada episode tersedia.</p>';
+      }
+    };
+
+    
+    const fetchRelatedAnime = async (query) => {
+      try {
+        const response = await fetch(`${API_BASE}/search/${query}`);
+        if (!response.ok) throw new Error('Search network response was not ok');
+        
+        const { data } = await response.json();
+        if (!data || data.length === 0) {
+          relatedGrid.innerHTML = '<p class="text-slate-400 col-span-full text-center">Tidak ada anime terkait ditemukan.</p>';
+          return;
+        }
+
+       
+        const validAnime = data.slice(0, 6);
+        const posterPromises = validAnime.map(anime => fetchAnimePoster(anime.slug));
+        const resolvedPosters = await Promise.all(posterPromises);
+        const finalData = validAnime.map((anime, index) => ({
+          ...anime,
+          resolvedPoster: resolvedPosters[index]
+        }));
+        
+        renderRelatedAnime(finalData);
+
+      } catch (error) {
+        console.error('Failed to fetch related anime:', error);
+        relatedGrid.innerHTML = '<p class="text-slate-400 col-span-full text-center">Gagal memuat anime terkait.</p>';
+      }
+    };
+
+    
+    const renderRelatedAnime = (animeList) => {
+      relatedGrid.innerHTML = animeList.map(anime => {
+        const posterContent = anime.resolvedPoster || NO_IMAGE_PLACEHOLDER_HTML;
+        return `
+          <a href="detail.html?slug=${anime.slug}" class="group block bg-slate-800 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-2 card-hover-glow shine-effect">
+              <div class="relative pt-[140%]">
+                  ${posterContent}
+              </div>
+              <div class="p-3 text-center">
+                  <h3 class="font-semibold text-white truncate group-hover:text-blue-400 transition">${anime.title}</h3>
+              </div>
+          </a>
+        `;
+      }).join('');
+    };
+
+    
+    const fetchAnimePoster = async (slug) => {
+        const detailUrl = `${API_BASE}/anime/${slug}`;
+        try {
+            const response = await fetch(detailUrl);
+            if (!response.ok) {
+                console.warn(`Gagal mengambil detail untuk slug: ${slug}. Status: ${response.status}`);
+                return NO_IMAGE_PLACEHOLDER_HTML;
+            }
+            
+            const anime = await response.json(); 
+            const posterUrl = anime?.poster;
+            const title = anime?.title || slug; 
+            
+            if (posterUrl && typeof posterUrl === 'string' && posterUrl.length > 5) {
+                const fallbackImageUrl = 'https://placehold.co/300x400/1e293b/94a3b8?text=Image+Error';
+                
+                return `
+                    <img src="${posterUrl}" 
+                         alt="Poster ${title}" 
+                         class="absolute top-0 left-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 rounded-t-lg" 
+                         loading="lazy"
+                         onerror="this.onerror=null; this.src='${fallbackImageUrl}';">
+                `;
+            }
+            
+            return NO_IMAGE_PLACEHOLDER_HTML;
+
+        } catch (error) {
+            console.error(`Error saat mengambil poster untuk slug ${slug}:`, error);
+            return NO_IMAGE_PLACEHOLDER_HTML;
+        }
+    };
+
+   
+    
+    
+    const runEntryAnimations = () => {
+      const tl = gsap.timeline({ defaults: { ease: 'power2.out', duration: 0.7 }});
+      tl.to('#episode-title', { opacity: 1, y: 0, duration: 0.6 }, 0.1)
+        .to('#video-player-container', { opacity: 1, scale: 1 }, 0.2)
+        .to('#episode-navigation', { opacity: 1 }, 0.3)
+        
+       
+        .fromTo('#episode-navigation-mobile', { opacity: 0, y: 20 }, { opacity: 1, y: 0, ease: 'power3.out' }, 0.4)
+        
+        .fromTo('#poster-wrapper', { opacity: 0, x: -30 }, { opacity: 1, x: 0 }, 0.3)
+        .fromTo('#info-wrapper', { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, 0.4)
+        .to('#info-wrapper-mobile', { opacity: 1 }, 0.3)
+        .to('#synopsis-wrapper-mobile', { opacity: 1 }, 0.4)
+        .fromTo('#tabs-wrapper', { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, 0.5)
+        .fromTo('#episodes-grid > a', { opacity: 0, y: 15 }, { opacity: 1, y: 0, stagger: 0.03 }, 0.6);
+    };
+
+   
+
+    
+    const setupTabListeners = () => {
+      document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', () => {
+         
+          if (button.classList.contains('active')) return;
+
+         
+          const currentActiveButton = document.querySelector('.tab-button.active');
+          if(currentActiveButton) {
+            currentActiveButton.classList.remove('active', 'active-mobile', 'bg-blue-600', 'text-white', 'md:border-blue-500');
+            currentActiveButton.classList.add('text-slate-300', 'bg-slate-700', 'md:bg-transparent', 'md:border-transparent', 'md:hover:border-slate-500'); 
+          }
+          
+         
+          button.classList.add('active', 'active-mobile', 'bg-blue-600', 'text-white', 'md:border-b-2', 'md:border-blue-500');
+          button.classList.remove('text-slate-300', 'bg-slate-700', 'md:bg-transparent', 'md:border-transparent', 'md:hover:border-slate-500');
+          
+         
+          const targetTabId = button.dataset.tab;
+          const currentTab = document.querySelector('.tab-content:not(.hidden)');
+          const newTab = document.getElementById(`${targetTabId}-tab`);
+
+          if (currentTab && newTab) {
+           
+            const slideDirection = (targetTabId === 'episodes') ? 20 : -20;
+            
+            gsap.to(currentTab, { 
+              opacity: 0, 
+              x: slideDirection,
+              duration: 0.3, 
+              ease: 'power1.in',
+              onComplete: () => {
+                currentTab.classList.add('hidden');
+                currentTab.style.transform = '';
+                
+                newTab.classList.remove('hidden');
+                gsap.fromTo(newTab, 
+                  { opacity: 0, x: -slideDirection },
+                  { opacity: 1, x: 0, duration: 0.4, ease: 'power1.out' }
+                );
+                
+                if (targetTabId === 'related') {
+                    gsap.fromTo('#related-grid > a', 
+                        { opacity: 0, y: 20 }, 
+                        { opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power2.out', delay: 0.1 }
+                    );
+                }
+              }
+            });
+          }
+        });
+      });
+    };
+
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const slug = urlParams.get('slug');
+
+     
+      gsap.from('header', { y: -100, opacity: 0, duration: 0.8, ease: 'power3.out', delay: 0.2 });
+      
+     
+      gsap.from('#bottom-nav', { y: 100, opacity: 0, duration: 0.8, ease: 'power3.out', delay: 0.5 });
+      
+     
+
+
+      if (slug) {
+        loadPageData(slug);
+      } else {
+        skeletonLoader.style.display = 'none';
+        errorMessage.classList.remove('hidden');
+        gsap.fromTo(errorMessage, {opacity: 0, y: 20}, {opacity: 1, y: 0, duration: 0.5});
+      }
+
+      searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const query = searchInput.value.trim();
+        if (query) {
+          window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+        }
+      });
+      
+     
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        mobileMenuIcons[0].classList.toggle('hidden');
+        mobileMenuIcons[1].classList.toggle('hidden');
+      });
+
+      setupTabListeners();
+    });
+
+  </script>
+</body>
+</html>
